@@ -1,5 +1,5 @@
 @startuml
-title Sistema Gluten Free Life\nDiagrama de Estados - PedidoCompra
+title Sistema Gluten Free Life\nDiagrama de Estados: PedidoCompra
 
 skinparam backgroundColor #FFFFFF
 skinparam state {
@@ -19,23 +19,22 @@ state "Enviado" as Enviado
 state "En gestión" as EnGestion
 state "Entregado" as Entregado
 state "Finalizado" as Finalizado
-state "Cancelado" as Cancelado
 
-EnPreparacion : Se consolidan productos\ncon stock crítico
+EnPreparacion : Consolidación de productos\ncon stock crítico
 
-EnPreparacion --> Generado : generar pedido
+EnPreparacion --> Generado : consolidar faltantes
 
-Generado : Pedido de compra creado
+Generado : Pedido de compra generado
 
 Generado --> Exportado : generarPDF()
 
-Exportado : PDF/listado disponible
+Exportado : Pedido disponible\nen PDF/listado
 
-Exportado --> Enviado : enviar al intermediario
+Exportado --> Enviado : enviar pedido
 
 Enviado : Pedido recibido por\nIntermediarioLogistico
 
-Enviado --> EnGestion : iniciar gestión de compra
+Enviado --> EnGestion : gestionar compra
 
 EnGestion : Compra y retiro\nde mercadería
 
@@ -43,13 +42,8 @@ EnGestion --> Entregado : entregar mercadería
 
 Entregado : Mercadería recibida\nen el comercio
 
-Entregado --> Finalizado : registrar recepción
-
-EnPreparacion --> Cancelado : cancelar pedido
-Generado --> Cancelado : cancelar pedido
-Exportado --> Cancelado : cancelar pedido
+Entregado --> Finalizado : finalizar pedido
 
 Finalizado --> [*]
-Cancelado --> [*]
 
 @enduml

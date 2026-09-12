@@ -51,9 +51,7 @@ node "Infraestructura en la Nube" as Cloud {
         artifact "Backend / API" as API
     }
 
-    database "Base de Datos\nRemota" as DBRemote
-
-    database "Respaldo\nRemoto" as Backup
+    database "Base de Datos /\nRéplica Remota Segura" as DBRemote
 }
 
 cloud "Mercado Pago" as MP {
@@ -70,7 +68,6 @@ AppDueno --> Internet
 Internet --> API
 
 API --> DBRemote
-DBRemote --> Backup : respaldo
 
 AppMostrador --> Internet
 Internet --> MPAPI : cobro electrónico

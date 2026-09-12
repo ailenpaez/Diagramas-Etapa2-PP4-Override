@@ -1,5 +1,5 @@
 @startuml
-title Sistema Gluten Free Life\nDiagrama de Actividades - Registro de Venta
+title Sistema Gluten Free Life\nDiagrama de Actividades: Registro de Venta
 
 skinparam backgroundColor #FFFFFF
 skinparam activity {

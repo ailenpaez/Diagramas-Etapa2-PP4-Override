@@ -1,0 +1,55 @@
+@startuml
+title Sistema Gluten Free Life\nDiagrama de Estados - PedidoCompra
+
+skinparam backgroundColor #FFFFFF
+skinparam state {
+    BackgroundColor #F0E4F7
+    BorderColor #7B1FA2
+    FontColor #4A148C
+}
+skinparam ArrowColor #7B1FA2
+skinparam titleFontColor #4A148C
+
+[*] --> EnPreparacion
+
+state "En preparación" as EnPreparacion
+state "Generado" as Generado
+state "Exportado" as Exportado
+state "Enviado" as Enviado
+state "En gestión" as EnGestion
+state "Entregado" as Entregado
+state "Finalizado" as Finalizado
+state "Cancelado" as Cancelado
+
+EnPreparacion : Se consolidan productos\ncon stock crítico
+
+EnPreparacion --> Generado : generar pedido
+
+Generado : Pedido de compra creado
+
+Generado --> Exportado : generarPDF()
+
+Exportado : PDF/listado disponible
+
+Exportado --> Enviado : enviar al intermediario
+
+Enviado : Pedido recibido por\nIntermediarioLogistico
+
+Enviado --> EnGestion : iniciar gestión de compra
+
+EnGestion : Compra y retiro\nde mercadería
+
+EnGestion --> Entregado : entregar mercadería
+
+Entregado : Mercadería recibida\nen el comercio
+
+Entregado --> Finalizado : registrar recepción
+
+EnPreparacion --> Cancelado : cancelar pedido
+Generado --> Cancelado : cancelar pedido
+Exportado --> Cancelado : cancelar pedido
+
+Finalizado --> [*]
+Cancelado --> [*]
+
+@enduml

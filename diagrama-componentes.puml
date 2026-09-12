@@ -1,0 +1,89 @@
+@startuml
+title Sistema Gluten Free Life\nDiagrama de Componentes
+
+skinparam backgroundColor #FFFFFF
+skinparam componentStyle rectangle
+
+skinparam component {
+    BackgroundColor #FCE4E4
+    BorderColor #C62828
+    FontColor #8E0000
+}
+skinparam package {
+    BackgroundColor #FFF7F7
+    BorderColor #E57373
+    FontColor #8E0000
+}
+skinparam actor {
+    BorderColor #C62828
+    FontColor #8E0000
+}
+skinparam ArrowColor #C62828
+skinparam titleFontColor #8E0000
+
+actor "Usuario\n(Dueño / Pareja)" as Usuario
+
+package "Sistema Gluten Free Life" {
+
+    [Interfaz de Usuario] as UI
+
+    [Autenticación y Usuarios] as Auth
+
+    [Gestión de Productos\ne Inventario] as Inventario
+
+    [Gestión de\nVencimientos y Alertas] as Alertas
+
+    [Punto de Venta\nPOS] as POS
+
+    [Gestión de Caja] as Caja
+
+    [Gestión de Compras] as Compras
+
+    [Costos y Precios] as Precios
+
+    [Reportes] as Reportes
+
+    [Persistencia Local] as Local
+
+    [Sincronización] as Sync
+
+    [Persistencia Remota] as Remota
+}
+
+component "Mercado Pago /\nCobro Electrónico" as MP <<sistema externo>>
+
+artifact "Planilla Excel" as Excel
+
+Usuario --> UI
+
+UI --> Auth
+UI --> Inventario
+UI --> POS
+UI --> Caja
+UI --> Compras
+UI --> Reportes
+
+Inventario --> Alertas
+Inventario --> Precios
+
+POS --> Inventario
+POS --> Caja
+POS --> MP
+
+Compras --> Inventario
+
+Reportes --> Inventario
+Reportes --> POS
+Reportes --> Caja
+
+Inventario --> Local
+POS --> Local
+Caja --> Local
+Compras --> Local
+
+Local --> Sync
+Sync --> Remota
+
+Excel --> Inventario : importación inicial
+
+@enduml

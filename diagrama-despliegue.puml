@@ -1,0 +1,78 @@
+@startuml
+title Sistema Gluten Free Life\nDiagrama de Despliegue
+
+skinparam backgroundColor #FFFFFF
+
+skinparam node {
+    BackgroundColor #FFF0D9
+    BorderColor #EF6C00
+    FontColor #BF360C
+}
+
+skinparam database {
+    BackgroundColor #FFE0B2
+    BorderColor #EF6C00
+    FontColor #BF360C
+}
+
+skinparam artifact {
+    BackgroundColor #FFF8E1
+    BorderColor #F57C00
+    FontColor #BF360C
+}
+
+skinparam cloud {
+    BackgroundColor #FFF3E0
+    BorderColor #EF6C00
+    FontColor #BF360C
+}
+
+skinparam ArrowColor #EF6C00
+skinparam titleFontColor #BF360C
+
+node "Local Gluten Free Life" {
+
+    node "PC de Mostrador" as PC {
+        artifact "Aplicación\nGluten Free Life" as AppMostrador
+        database "Almacenamiento\nLocal" as DBLocal
+        artifact "Servicio de\nSincronización" as Sync
+    }
+
+    node "Notebook del Dueño" as Notebook {
+        artifact "Aplicación /\nInterfaz de Gestión" as AppDueno
+    }
+}
+
+cloud "Internet" as Internet
+
+node "Infraestructura en la Nube" as Cloud {
+
+    node "Servidor de Aplicación" as Server {
+        artifact "Backend / API" as API
+    }
+
+    database "Base de Datos\nRemota" as DBRemote
+
+    database "Respaldo\nRemoto" as Backup
+}
+
+cloud "Mercado Pago" as MP {
+    artifact "Servicio de\nCobro Electrónico" as MPAPI
+}
+
+AppMostrador --> DBLocal : operaciones locales
+AppMostrador --> Sync
+
+Sync --> Internet
+Internet --> API : sincronización
+
+AppDueno --> Internet
+Internet --> API
+
+API --> DBRemote
+DBRemote --> Backup : respaldo
+
+AppMostrador --> Internet
+Internet --> MPAPI : cobro electrónico
+
+@enduml

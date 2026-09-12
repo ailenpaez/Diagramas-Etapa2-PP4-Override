@@ -1,0 +1,90 @@
+@startuml
+title Sistema Gluten Free Life\nDiagrama de Actividades - Registro de Venta
+
+skinparam backgroundColor #FFFFFF
+skinparam activity {
+    BackgroundColor #DDF5E3
+    BorderColor #2E7D32
+    FontColor #1B5E20
+    DiamondBackgroundColor #C8E6C9
+    DiamondBorderColor #2E7D32
+}
+skinparam partition {
+    BackgroundColor #F1FAF3
+    BorderColor #66BB6A
+    FontColor #1B5E20
+}
+skinparam ArrowColor #2E7D32
+skinparam titleFontColor #1B5E20
+
+start
+
+partition "Usuario" {
+    :Iniciar nueva venta;
+    :Seleccionar producto;
+    :Ingresar cantidad o peso;
+}
+
+partition "Sistema" {
+    :Consultar producto;
+    :Verificar stock disponible;
+}
+
+while (¿Stock suficiente?) is (No)
+
+    partition "Sistema" {
+        :Informar stock insuficiente;
+    }
+
+    partition "Usuario" {
+        :Modificar cantidad o peso;
+    }
+
+    partition "Sistema" {
+        :Verificar nuevamente\nstock disponible;
+    }
+
+endwhile (Sí)
+
+partition "Sistema" {
+    :Agregar producto a la venta;
+    :Calcular total de la venta;
+}
+
+partition "Usuario" {
+    :Seleccionar medio de pago;
+}
+
+partition "Sistema" {
+
+    if (¿Pago en efectivo?) then (Sí)
+        :Registrar monto recibido;
+        :Calcular cambio;
+    else (No)
+        :Registrar cobro electrónico\nMercado Pago / Tarjeta;
+    endif
+
+    :Registrar Venta;
+    :Registrar DetalleVenta;
+    :Descontar stock del Producto;
+
+    if (¿Stock alcanzó nivel crítico?) then (Sí)
+        :Generar alerta de stock crítico;
+    endif
+
+    :Generar comprobante;
+
+    if (¿Hay conexión a Internet?) then (Sí)
+        :Sincronizar información;
+    else (No)
+        :Guardar venta localmente;
+        :Marcar pendiente de sincronización;
+    endif
+
+    if (¿Existen ventas pendientes\nde sincronización?) then (Sí)
+        :Sincronizar automáticamente\nal restablecer la conexión;
+    endif
+}
+
+stop
+@enduml

@@ -169,7 +169,7 @@ Estas vistas complementan el **Diagrama de Clases**, que define las principales 
 
 📍 Basado en las actividades realizadas en el [Drive - Grupo Override](https://drive.google.com/drive/folders/1RWc6eRiwrnX08MYskbyjL1upUMOJ-Lql?usp=drive_link).
 
-| Integrante grupo Override  |
+| Integrantes grupo Override  |
 | ------------- |
 | Marcela Herrera      |
 | Sebastián Puche      | 
